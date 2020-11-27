@@ -1,0 +1,4 @@
+#!/bin/bash
+set -x
+g++ -ddd -g3 -Wall `root-config --cflags` -c -o $1.o $1.C
+g++ -ddd -g3 $1.o `root-config --glibs` -o $1.exe
