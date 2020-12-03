@@ -52,20 +52,20 @@ int main() {
     // dc
     const int NDCHITMAX = 100000;
     int   ndchit;
-    vector<double>   *sector = new vector<double>;
-    vector<double>   *layer = new vector<double>;
-    vector<double>   *superlayer = new vector<double>;
+    vector<double> *sector = new vector<double>;
+    vector<double>  *layer = new vector<double>;
     vector<double>   *wire = new vector<double>;
-    vector<double> *pid = new vector<double>;
-    vector<double> *mpid = new vector<double>;
-    vector<double> *Edep = new vector<double>;
-    vector<double>    *E = new vector<double>;
-    vector<double>   *vx = new vector<double>;
-    vector<double>   *vy = new vector<double>;
-    vector<double>   *vz = new vector<double>;
-    vector<double>  *mvx = new vector<double>;
-    vector<double>  *mvy = new vector<double>;
-    vector<double>  *mvz = new vector<double>;
+    vector<double>   *hitn = new vector<double>;
+    vector<double>   *pid  = new vector<double>;
+    vector<double>   *mpid = new vector<double>;
+    vector<double>   *Edep = new vector<double>;
+    vector<double>      *E = new vector<double>;
+    vector<double>     *vx = new vector<double>;
+    vector<double>     *vy = new vector<double>;
+    vector<double>     *vz = new vector<double>;
+    vector<double>    *mvx = new vector<double>;
+    vector<double>    *mvy = new vector<double>;
+    vector<double>    *mvz = new vector<double>;
 	
 
     
@@ -78,11 +78,10 @@ int main() {
     // DC
     TChain *d= new TChain("dc");
     d->Add("out*.root");
-    //    d->SetBranchAddress("ndchit",&ndchit);
     d->SetBranchAddress("wire",&wire);
-    //    d->SetBranchAddress("superlayer",&superlayer);
     d->SetBranchAddress("layer",&layer);
     d->SetBranchAddress("sector",&sector);
+    d->SetBranchAddress("hitn",&hitn);
     d->SetBranchAddress("trackE",&E);
     d->SetBranchAddress("totEdep",&Edep);
     d->SetBranchAddress("pid",&pid);
@@ -93,7 +92,7 @@ int main() {
     d->SetBranchAddress("vx",&vx);
     d->SetBranchAddress("vy",&vy);
     d->SetBranchAddress("vz",&vz);
-
+   
     
     Long64_t nentries = d->GetEntries();
     cout << nentries << endl;
@@ -250,7 +249,6 @@ int main() {
         pid_gen->clear();
         sector->clear();
         layer->clear();
-        superlayer->clear();
         wire->clear();
         pid->clear();
         mpid->clear();
@@ -266,12 +264,13 @@ int main() {
         d->GetEntry(jentry);
         g->GetEntry(jentry);
         ngen=pid_gen->size();
-        ndchit=pid->size();
+        ndchit=sector->size();
         if(ngen>0) ngoodentries++;
         if(int(jentry/1000)*1000==jentry) cout << "Analyzed " << jentry << " events of " << nentries << endl;
 
-        for(int i=0; i<ndchit; i++) {
-            if((*pid)[i]==2112 || (*pid)[i]==2212) {
+	for(int i=0; i<ndchit; i++) {
+	  int it=(*hitn)[i];
+	    if((*pid)[it]==2112 || (*pid)[it]==2212) {
                 mass=938;
             }
             else{
@@ -281,40 +280,41 @@ int main() {
             if(dc_reg==1) dc_weight=1;
             else          dc_weight=2;
             hi_dcocc_all->Fill((*wire)[i],(*layer)[i],dc_weight);
-            if((*Edep)[i]>0.00005) {
+	    
+	    if((*Edep)[it]>0.00005) {
                 hi_dcocc_ecut->Fill((*wire)[i],(*layer)[i],dc_weight);
 	        	hi_dcocc_region[dc_reg-1]->Fill((*sector)[i],dc_weight);
-                if(dc_reg==1) {
-                    hi_bg_origin->Fill((*vz)[i],sqrt((*vx)[i]*(*vx)[i]+(*vy)[i]*(*vy)[i]));
-                    hi_bg_z->Fill((*vz)[i]);
-                    if((*pid)[i]==11) {
-                        hi_bg_z_e->Fill((*vz)[i]);
+	        if(dc_reg==1) {
+                    hi_bg_origin->Fill((*vz)[it],sqrt((*vx)[it]*(*vx)[it]+(*vy)[it]*(*vy)[it]));
+                    hi_bg_z->Fill((*vz)[it]);
+                    if((*pid)[it]==11) {
+                        hi_bg_z_e->Fill((*vz)[it]);
                     }
-                    else if((*pid)[i]==22) {
-                        hi_bg_z_g->Fill((*vz)[i]);
+                    else if((*pid)[it]==22) {
+                        hi_bg_z_g->Fill((*vz)[it]);
                     }
                     else {
-                        hi_bg_z_o->Fill((*vz)[i]);
+                        hi_bg_z_o->Fill((*vz)[it]);
                     }
-                    if((*E)[i]>mass) hi_bg_energy_tmp->Fill((*vz)[i],sqrt((*vx)[i]*(*vx)[i]+(*vy)[i]*(*vy)[i]),sqrt((*E)[i]*(*E)[i]-mass*mass));
+                    if((*E)[it]>mass) hi_bg_energy_tmp->Fill((*vz)[it],sqrt((*vx)[it]*(*vx)[it]+(*vy)[it]*(*vy)[it]),sqrt((*E)[it]*(*E)[it]-mass*mass));
                   
-                    hi_bg_E->Fill(sqrt((*E)[i]*(*E)[i]-mass*mass));
+                    hi_bg_E->Fill(sqrt((*E)[it]*(*E)[it]-mass*mass));
                 }
                 
-                hi_bg_r_vs_z_vs_ene_reg_temp[dc_reg-1]->Fill((*vz)[i],sqrt((*vx)[i]*(*vx)[i]+(*vy)[i]*(*vy)[i]),sqrt((*E)[i]*(*E)[i]-mass*mass));
-                hi_bg_r_vs_z_reg[dc_reg-1]->Fill((*vz)[i],sqrt((*vx)[i]*(*vx)[i]+(*vy)[i]*(*vy)[i]));
+                hi_bg_r_vs_z_vs_ene_reg_temp[dc_reg-1]->Fill((*vz)[it],sqrt((*vx)[it]*(*vx)[it]+(*vy)[it]*(*vy)[it]),sqrt((*E)[it]*(*E)[it]-mass*mass));
+                hi_bg_r_vs_z_reg[dc_reg-1]->Fill((*vz)[it],sqrt((*vx)[it]*(*vx)[it]+(*vy)[it]*(*vy)[it]));
                 
-                if((*pid)[i]==11) hi_bg_z_e_reg[dc_reg-1]->Fill((*vz)[i]);
-                if((*pid)[i]==22) hi_bg_z_g_reg[dc_reg-1]->Fill((*vz)[i]);
-                if((*pid)[i]==2112) hi_bg_z_n_reg[dc_reg-1]->Fill((*vz)[i]);
-                if((*pid)[i]==2212) hi_bg_z_p_reg[dc_reg-1]->Fill((*vz)[i]);
-                if((*pid)[i]==211 || (*pid)[i]==-211 ) hi_bg_z_pi_reg[dc_reg-1]->Fill((*vz)[i]);
-                if((*pid)[i]!=211 && (*pid)[i]!=-211 && (*pid)[i]!=11 && (*pid)[i]!=22 && (*pid)[i]!=2212) hi_bg_z_o_reg[dc_reg-1]->Fill((*vz)[i]);
+                if((*pid)[it]==11) hi_bg_z_e_reg[dc_reg-1]->Fill((*vz)[it]);
+                if((*pid)[it]==22) hi_bg_z_g_reg[dc_reg-1]->Fill((*vz)[it]);
+                if((*pid)[it]==2112) hi_bg_z_n_reg[dc_reg-1]->Fill((*vz)[it]);
+                if((*pid)[it]==2212) hi_bg_z_p_reg[dc_reg-1]->Fill((*vz)[it]);
+                if((*pid)[it]==211 || (*pid)[it]==-211 ) hi_bg_z_pi_reg[dc_reg-1]->Fill((*vz)[it]);
+                if((*pid)[it]!=211 && (*pid)[it]!=-211 && (*pid)[it]!=11 && (*pid)[it]!=22 && (*pid)[it]!=2212) hi_bg_z_o_reg[dc_reg-1]->Fill((*vz)[it]);
                 
-                if((*vz)[i]>1000*(dc_reg+1)) hi_bg_y_vs_x_reg[dc_reg-1]->Fill((*vx)[i],(*vy)[i]);
-                hi_bg_z_reg[dc_reg-1]->Fill((*vz)[i]);
+                if((*vz)[it]>1000*(dc_reg+1)) hi_bg_y_vs_x_reg[dc_reg-1]->Fill((*vx)[it],(*vy)[it]);
+                hi_bg_z_reg[dc_reg-1]->Fill((*vz)[it]);
                 
-            }
+		}
         }
         
     }
