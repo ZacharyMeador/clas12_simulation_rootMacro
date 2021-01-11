@@ -269,7 +269,7 @@ int main() {
         if(int(jentry/1000)*1000==jentry) cout << "Analyzed " << jentry << " events of " << nentries << endl;
 
 	for(int i=0; i<ndchit; i++) {
-	  int it=(*hitn)[i];
+	    int it=(*hitn)[i]-1;
 	    if((*pid)[it]==2112 || (*pid)[it]==2212) {
                 mass=938;
             }
@@ -283,7 +283,7 @@ int main() {
 	    
 	    if((*Edep)[it]>0.00005) {
                 hi_dcocc_ecut->Fill((*wire)[i],(*layer)[i],dc_weight);
-	        	hi_dcocc_region[dc_reg-1]->Fill((*sector)[i],dc_weight);
+	        hi_dcocc_region[dc_reg-1]->Fill((*sector)[i],dc_weight);
 	        if(dc_reg==1) {
                     hi_bg_origin->Fill((*vz)[it],sqrt((*vx)[it]*(*vx)[it]+(*vy)[it]*(*vy)[it]));
                     hi_bg_z->Fill((*vz)[it]);
