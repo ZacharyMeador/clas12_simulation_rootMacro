@@ -101,14 +101,14 @@ int main() {
 
 
     // Create histos
-    TH2F *hi_dcocc_all   = new TH2F("DC Occ. All", "DC Occ. All",112, 1.,113., 36, 1.,37.);
-    hi_dcocc_all->GetXaxis()->SetTitle("wire");
-    hi_dcocc_all->GetYaxis()->SetTitle("layer");
-
-    TH2F *hi_dcocc_ecut   = new TH2F("DC Occ. E > 50 eV", "DC Occ. E > 50 eV",112, 1.,113., 36, 1.,37.);
-    hi_dcocc_ecut->GetXaxis()->SetTitle("wire");
-    hi_dcocc_ecut->GetYaxis()->SetTitle("layer");
+    TH2F *hi_dcocc   = new TH2F("DC Occ. E > 50 eV", "DC Occ. E > 50 eV",112, 1.,113., 36, 1.,37.);
+    hi_dcocc->GetXaxis()->SetTitle("wire");
+    hi_dcocc->GetYaxis()->SetTitle("layer");
     
+    TH2F *hi_dcocc_tgt   = new TH2F("DC Occ. Target", "DC Occ. Target",112, 1.,113., 36, 1.,37.);
+    hi_dcocc_tgt->GetXaxis()->SetTitle("wire");
+    hi_dcocc_tgt->GetYaxis()->SetTitle("layer");
+
     char *histname = new char[50];
     TH1F *hi_dcocc_region[3];
     for(int i=0; i<3; i++) {
@@ -135,7 +135,7 @@ int main() {
         hi_bg_r_vs_z_reg[i]->GetXaxis()->SetTitle("z(mm)");
         hi_bg_r_vs_z_reg[i]->GetYaxis()->SetTitle("r(mm)");
       //  sprintf(histname,"hi_bg_y_vs_x_region%i",i);
-        hi_bg_y_vs_x_reg[i]= new TH2F(Form("hi_bg_y_vs_x_region%i",i+1), Form("hi_bg_y_vs_x_region%i",i+1),100, -1000.,1000., 100, -1000.,1000.);
+        hi_bg_y_vs_x_reg[i]= new TH2F(Form("hi_bg_y_vs_x_region%i",i+1), Form("hi_bg_y_vs_x_region%i",i+1),200, -1000.,1000., 200, -1000.,1000.);
         hi_bg_y_vs_x_reg[i]->GetXaxis()->SetTitle("x(mm)");
         hi_bg_y_vs_x_reg[i]->GetYaxis()->SetTitle("y(mm)");
         
@@ -176,32 +176,32 @@ int main() {
     
     for(int i=0; i<3; i++) {
     //    sprintf(histname,"hi_bg_z_region%i",i);
-    hi_bg_z_reg[i]= new TH1F(Form("hi_bg_z_region%i",i+1), Form("hi_bg_z_region%i",i+1),100, -200.,6500.);
+    hi_bg_z_reg[i]= new TH1F(Form("hi_bg_z_region%i",i+1), Form("hi_bg_z_region%i",i+1),200, -200.,6500.);
 	hi_bg_z_reg[i]->GetXaxis()->SetTitle("z(mm)");
 	hi_bg_z_reg[i]->SetTitle("Rate (MHz)");
 
         
-    hi_bg_z_e_reg[i]= new TH1F(Form("hi_bg_z_e_reg%i",i+1), Form("hi_bg_z_e_reg%i",i+1),100, -200.,6500.);
+    hi_bg_z_e_reg[i]= new TH1F(Form("hi_bg_z_e_reg%i",i+1), Form("hi_bg_z_e_reg%i",i+1),200, -200.,6500.);
     hi_bg_z_e_reg[i]->GetXaxis()->SetTitle("z(mm)");
     hi_bg_z_e_reg[i]->SetTitle("Rate (MHz)");
         
-    hi_bg_z_g_reg[i]= new TH1F(Form("hi_bg_z_g_reg%i",i+1), Form("hi_bg_z_g_reg%i",i+1),100, -200.,6500.);
+    hi_bg_z_g_reg[i]= new TH1F(Form("hi_bg_z_g_reg%i",i+1), Form("hi_bg_z_g_reg%i",i+1),200, -200.,6500.);
     hi_bg_z_g_reg[i]->GetXaxis()->SetTitle("z(mm)");
     hi_bg_z_g_reg[i]->SetTitle("Rate (MHz)");
     
-    hi_bg_z_n_reg[i]= new TH1F(Form("hi_bg_z_n_reg%i",i+1), Form("hi_bg_z_n_reg%i",i+1),100, -200.,6500.);
+    hi_bg_z_n_reg[i]= new TH1F(Form("hi_bg_z_n_reg%i",i+1), Form("hi_bg_z_n_reg%i",i+1),200, -200.,6500.);
     hi_bg_z_n_reg[i]->GetXaxis()->SetTitle("z(mm)");
     hi_bg_z_n_reg[i]->SetTitle("Rate (MHz)");
         
-    hi_bg_z_p_reg[i]= new TH1F(Form("hi_bg_z_p_reg%i",i+1), Form("hi_bg_z_p_reg%i",i+1),100, -200.,6500.);
+    hi_bg_z_p_reg[i]= new TH1F(Form("hi_bg_z_p_reg%i",i+1), Form("hi_bg_z_p_reg%i",i+1),200, -200.,6500.);
     hi_bg_z_p_reg[i]->GetXaxis()->SetTitle("z(mm)");
     hi_bg_z_p_reg[i]->SetTitle("Rate (MHz)");
 
-    hi_bg_z_pi_reg[i]= new TH1F(Form("hi_bg_z_pi_reg%i",i+1), Form("hi_bg_z_pi_reg%i",i+1),100, -200.,6500.);
+    hi_bg_z_pi_reg[i]= new TH1F(Form("hi_bg_z_pi_reg%i",i+1), Form("hi_bg_z_pi_reg%i",i+1),200, -200.,6500.);
     hi_bg_z_pi_reg[i]->GetXaxis()->SetTitle("z(mm)");
     hi_bg_z_pi_reg[i]->SetTitle("Rate (MHz)");
         
-    hi_bg_z_o_reg[i]= new TH1F(Form("hi_bg_z_o_reg%i",i+1), Form("hi_bg_z_o_reg%i",i+1),100, -200.,6500.);
+    hi_bg_z_o_reg[i]= new TH1F(Form("hi_bg_z_o_reg%i",i+1), Form("hi_bg_z_o_reg%i",i+1),200, -200.,6500.);
     hi_bg_z_o_reg[i]->GetXaxis()->SetTitle("z(mm)");
     hi_bg_z_o_reg[i]->SetTitle("Rate (MHz)");
         
@@ -279,11 +279,11 @@ int main() {
             int dc_reg=int(((*layer)[i]-1)/12)+1;
             if(dc_reg==1) dc_weight=1;
             else          dc_weight=2;
-            hi_dcocc_all->Fill((*wire)[i],(*layer)[i],dc_weight);
-	    
+            
 	    if((*Edep)[it]>0.00005) {
-                hi_dcocc_ecut->Fill((*wire)[i],(*layer)[i],dc_weight);
-	        hi_dcocc_region[dc_reg-1]->Fill((*sector)[i],dc_weight);
+                hi_dcocc->Fill((*wire)[i],(*layer)[i],dc_weight);
+	        if((*vz)[it]<30)hi_dcocc_tgt->Fill((*wire)[i],(*layer)[i],dc_weight);
+		hi_dcocc_region[dc_reg-1]->Fill((*sector)[i],dc_weight);
 	        if(dc_reg==1) {
                     hi_bg_origin->Fill((*vz)[it],sqrt((*vx)[it]*(*vx)[it]+(*vy)[it]*(*vy)[it]));
                     hi_bg_z->Fill((*vz)[it]);
@@ -330,8 +330,8 @@ int main() {
     cout << nfull << " " << 1/norm << endl;
 
     // normalizing rate histogram to 10^35 luminosity
-    hi_dcocc_all->Scale(norm/6.);
-    hi_dcocc_ecut->Scale(norm/6.);
+    hi_dcocc->Scale(norm/6.);
+    hi_dcocc_tgt->Scale(norm/6.);
 
     
     hi_bg_z->Scale(1000./time);
@@ -358,10 +358,10 @@ int main() {
     c1->Divide(1,2);
     c1->cd(1);
     //   gPad->SetLogz();
-    hi_dcocc_all->Draw("COLZ");
+    hi_dcocc->Draw("COLZ");
     c1->cd(2);
     //   gPad->SetLogz();
-    hi_dcocc_ecut->Draw("COLZ");
+    hi_dcocc_tgt->Draw("COLZ");
     c1->Print("dc_occ.pdf(");
     
     
@@ -547,40 +547,34 @@ int main() {
     c4->Print("dc_occ.pdf");
     
     TCanvas *c5=new TCanvas("c5","Region 1 Background Origin",750,1000);
-    c5->Divide(1,3);
+    c5->Divide(1,2);
     c5->cd(1);
     gPad->SetLogz();
     hi_bg_r_vs_z_reg[0]->Draw("COLZ");
     c5->cd(2);
     gPad->SetLogz();
     hi_bg_y_vs_x_reg[0]->Draw("COLZ");
-    c5->cd(3);
-    hi_bg_z_reg[0]->Draw("");
     c5->Print("dc_occ.pdf");
     
 
     TCanvas *c6=new TCanvas("c6","Region 2 Background Origin",750,1000);
-    c6->Divide(1,3);
+    c6->Divide(1,2);
     c6->cd(1);
     gPad->SetLogz();
     hi_bg_r_vs_z_reg[1]->Draw("COLZ");
     c6->cd(2);
     gPad->SetLogz();
     hi_bg_y_vs_x_reg[1]->Draw("COLZ");
-    c6->cd(3);
-    hi_bg_z_reg[1]->Draw("");
     c6->Print("dc_occ.pdf");
 
     TCanvas *c7=new TCanvas("c7","Region 3 Background Origin",750,1000);
-    c7->Divide(1,3);
+    c7->Divide(1,2);
     c7->cd(1);
     gPad->SetLogz();
     hi_bg_r_vs_z_reg[2]->Draw("COLZ");
     c7->cd(2);
     gPad->SetLogz();
     hi_bg_y_vs_x_reg[2]->Draw("COLZ");
-    c7->cd(3);
-    hi_bg_z_reg[2]->Draw("");
     c7->Print("dc_occ.pdf");
  
 /*
@@ -593,11 +587,11 @@ int main() {
     TCanvas *c9=new TCanvas("c9","Sector Occupancy",500,500);
     double region_ave_occ[3]={0};
     double region_max_occ[3]={0};
-    for(int iy=0; iy<hi_dcocc_ecut->GetYaxis()->GetNbins(); iy++) {
+    for(int iy=0; iy<hi_dcocc->GetYaxis()->GetNbins(); iy++) {
         int dc_reg=int(iy/12);
-        for(int ix=0; ix<hi_dcocc_ecut->GetXaxis()->GetNbins(); ix++) {
-            region_ave_occ[dc_reg]+=hi_dcocc_ecut->GetBinContent(ix+1,iy+1);
-            if(hi_dcocc_ecut->GetBinContent(ix+1,iy+1)>region_max_occ[dc_reg]) region_max_occ[dc_reg]=hi_dcocc_ecut->GetBinContent(ix+1,iy+1);
+        for(int ix=0; ix<hi_dcocc->GetXaxis()->GetNbins(); ix++) {
+            region_ave_occ[dc_reg]+=hi_dcocc->GetBinContent(ix+1,iy+1);
+            if(hi_dcocc->GetBinContent(ix+1,iy+1)>region_max_occ[dc_reg]) region_max_occ[dc_reg]=hi_dcocc->GetBinContent(ix+1,iy+1);
         }
     }
     TF1 *mypol0[3];
@@ -634,7 +628,7 @@ int main() {
     c9->Print("dc_occ.pdf)");
     FILE *fp = fopen("dc_occ.txt","w");
     for(int i=0; i<3;i++) {
-        region_ave_occ[i]=region_ave_occ[i]/12.0/hi_dcocc_ecut->GetXaxis()->GetNbins();
+        region_ave_occ[i]=region_ave_occ[i]/12.0/hi_dcocc->GetXaxis()->GetNbins();
 	fprintf(fp,"%d   %5.3f  %5.3f  %5.3f  \n",i+1,100*region_ave_occ[i],100*region_max_occ[i],mypol0[i]->GetParameter(0));
     }
     fclose(fp);    
