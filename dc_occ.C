@@ -282,7 +282,7 @@ int main() {
             
 	    if((*Edep)[it]>0.00005) {
                 hi_dcocc->Fill((*wire)[i],(*layer)[i],dc_weight);
-	        if((*vz)[it]<30)hi_dcocc_tgt->Fill((*wire)[i],(*layer)[i],dc_weight);
+	        if((*vz)[it]<100)hi_dcocc_tgt->Fill((*wire)[i],(*layer)[i],dc_weight);
 		hi_dcocc_region[dc_reg-1]->Fill((*sector)[i],dc_weight);
 	        if(dc_reg==1) {
                     hi_bg_origin->Fill((*vz)[it],sqrt((*vx)[it]*(*vx)[it]+(*vy)[it]*(*vy)[it]));
