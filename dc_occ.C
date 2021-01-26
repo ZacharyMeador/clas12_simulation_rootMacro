@@ -513,11 +513,11 @@ int main() {
     //    hi_bg_z->SetMaximum(15);
     hi_bg_z->Draw("H");
     hi_bg_z_e->SetLineColor(2);
-    hi_bg_z_e->Draw("SAME");
+    hi_bg_z_e->Draw("HSAME");
     hi_bg_z_g->SetLineColor(4);
-    hi_bg_z_g->Draw("SAME");
+    hi_bg_z_g->Draw("HSAME");
     hi_bg_z_o->SetLineColor(3);
-    hi_bg_z_o->Draw("SAME");
+    hi_bg_z_o->Draw("HSAME");
     
     
     TLegend *leg = new TLegend(0.7,0.75,0.96,0.96);
